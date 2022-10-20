@@ -1,7 +1,23 @@
+var jumboDisp = $('#jumboDisp');
+var jumboTime = $('#rightNow');
+var jumboWeather = $('#jumboWeather');
+
+function test() {
+    jumboDisp.addText
+}
+
+// handle displaying the time
+function displayTime() {
+    var rightNow = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
+    jumboTime.text(rightNow);
+  } 
+
 $('#locationSearch').submit(function(event) {
     // alert($('input').first().val());
     event.preventDefault();
     var location = ($('input').first().val());
+    jumboDisp.text(location);
+    jumboWeather.text("It's Cold and it will continue to be cold for at least 5 more days");
     console.log(location);
     if (location) {
         getGeocode(location);
@@ -19,6 +35,7 @@ var getGeocode = function(place) {
         if (response.ok) {
             response.json().then(function (data) {
                 console.log(data);
+                console.log(data.type);
                 for (var i = 0; i < data.length; i++) {
                     console.log(data[i].latitude);
                     console.log(data[i].longitude);
@@ -33,5 +50,5 @@ var getGeocode = function(place) {
              alert('Unable to find location');
         });
 };
-
-
+// timers
+setInterval(displayTime, 1000);
