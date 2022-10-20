@@ -1,0 +1,7 @@
+body {
+    font-family: 'Roboto Mono', monospace;
+}
+
+#jumboDisp {
+    text-transform: capitalize;
+}
