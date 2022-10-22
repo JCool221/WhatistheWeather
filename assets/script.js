@@ -43,19 +43,21 @@ locationSearch.submit(function(event) {
     jumboWeather.text("It's Cold and it will continue to be cold for at least 5 more days");
     // log location and get geocode
     console.log(location);
-    // if (location) {
-        //     getGeocode(location);
+    if (location) {
+            getGeocode(location);
         
-        // }
+        }
         locationSearch.each(function(){
             this.reset();
         });    
     });    
     
-    // get geocode data
+    // get geocode
+    // data is looking at a local file, rename var?
+    
     var getGeocode = function(place) {
             // geocoding api
-            var apiUrl = 'https://api.geoapify.com/v1/geocode/search?text=lansing'&limit=1&type=city&format=json&apiKey=';
+            var apiUrl = 'https://api.geoapify.com/v1/geocode/search?text=' + location + '&limit=1&type=city&format=json&apiKey=ab7c6ca97d4d40f9b8d6f4bdafdb5a7f';
             console.log(apiUrl);
             fetch(apiUrl)
             .then(function (response) {
