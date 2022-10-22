@@ -5,3 +5,52 @@ body {
 #jumboDisp {
     text-transform: capitalize;
 }
+
+/* Slide button styling credit to Joe Bocock https://codepen.io/joebocock/pen/ZEWoMPb*/
+.location-button {
+    font-size: 20px;
+    font-weight: 200;
+    letter-spacing: 1px;
+    padding: 13px 30px 13px;
+    outline: 0;
+    border: 1px solid black;
+    cursor: pointer;
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+  }
+  
+  .location-button i {
+    opacity: 0;
+    font-size: 13px;
+    transition: 0.2s;
+    position: absolute;
+    right: 10px;
+    top: 21px;
+    transition: transform 1;
+  }
+  
+  .location-button div {
+    transition: transform 0.8s;
+  }
+  
+  .location-button:hover div {
+    transform: translateX(-6px);
+  }
+  
+  .location-button::after {
+    content: "";
+    background-color: #66f2d5;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    top: 7px;
+    left: 7px;
+  }
+  
+  .location-button:hover {
+    opacity: 1;
+    transform: translateX(-6px);
+  }
+  /* End of Slide Button  */
+  

@@ -35,7 +35,7 @@ locationSearch.submit(function(event) {
         newButton.addClass('location-button');
         newButton.attr('data-location', location);
         newButton.text(location);
-        buttonBox.append(location);
+        buttonBox.append(newButton);
    
     
     // placeholder responses
@@ -53,31 +53,31 @@ locationSearch.submit(function(event) {
     });    
     
     // get geocode data
-    // var getGeocode = function(place) {
-        //     // geocoding api
-        //     var apiUrl = 'http://api.positionstack.com/v1/forward?access_key=2e80fdd7df87b970a960084bf0805ce6&query=' + place + '&limit=1&output=json';
-        //     console.log(apiUrl);
-        //     fetch(apiUrl)
-        //     .then(function (response) {
-//         if (response.ok) {
-//             console.log(response);
-//             response.json().then(function (data) {
-//                 console.log(data, place);
-//                 console.log(data[i]);
-//                 for (var i = 0; i < data.length; i++) {
-//                     console.log(data[i].latitude);
-//                     console.log(data[i].longitude);
-//                 }
+    var getGeocode = function(place) {
+            // geocoding api
+            var apiUrl = 'https://api.geoapify.com/v1/geocode/search?text=lansing'&limit=1&type=city&format=json&apiKey=';
+            console.log(apiUrl);
+            fetch(apiUrl)
+            .then(function (response) {
+        if (response.ok) {
+            console.log(response);
+            response.json().then(function (data) {
+                console.log(data, place);
+                console.log(data[i]);
+                for (var i = 0; i < data.length; i++) {
+                    console.log(data[i].latitude);
+                    console.log(data[i].longitude);
+                }
 
-//             });
-//         } else {
-//             alert('Error: ' + response.message)
-//         }
-//     })
-//         .catch(function (error) {
-//              alert('Unable to find location');
-//         });
-// };
+            });
+        } else {
+            alert('Error: ' + response.message)
+        }
+    })
+        .catch(function (error) {
+             alert('Unable to find location');
+        });
+};
 
 // timers
 setInterval(displayTime, 1000);
