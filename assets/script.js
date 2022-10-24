@@ -55,31 +55,28 @@ locationSearch.submit(function(event) {
     // get geocode
     // data is looking at a local file, rename var?
     
-    var getGeocode = function(place) {
+    var getGeocode = function(location) {
             // geocoding api
-            var apiUrl = 'https://api.geoapify.com/v1/geocode/search?text=' + location + '&limit=1&type=city&format=json&apiKey=ab7c6ca97d4d40f9b8d6f4bdafdb5a7f';
-            console.log(apiUrl);
+        var apiUrl=('http://api.openweathermap.org/geo/1.0/direct?q=lansing&limit=5&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
             fetch(apiUrl)
             .then(function (response) {
-        if (response.ok) {
-            console.log(response);
-            response.json().then(function (data) {
-                console.log(data, place);
-                console.log(data[i]);
-                for (var i = 0; i < data.length; i++) {
-                    console.log(data[i].latitude);
-                    console.log(data[i].longitude);
+                console.log(response);
+                return response.json();
+            })
+            .then(function (data) {
+                console.log(data.results);
                 }
 
-            });
-        } else {
-            alert('Error: ' + response.message)
+            );
         }
-    })
-        .catch(function (error) {
-             alert('Unable to find location');
-        });
-};
+//         } else {
+//             alert('Error: ' + response.message)
+//         }
+//     })   ' + location + '
+//         .catch(function (error) {
+//              alert('Unable to find location');
+//         });
+// };
 
 // timers
 setInterval(displayTime, 1000);
