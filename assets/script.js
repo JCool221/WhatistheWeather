@@ -29,7 +29,6 @@ locationSearch.submit(function(event) {
     var locString = JSON.stringify(location);
     console.log(locString);
     localStorage.setItem('loc', locString);
-// button not appending just adding text to buttonbox.div
 
         var newButton = $('<button>');
         newButton.addClass('location-button');
@@ -52,31 +51,30 @@ locationSearch.submit(function(event) {
         });    
     });    
     
-    // get geocode
-    // data is looking at a local file, rename var?
+// get geocode
+// data is looking at a local file, rename var?
     
-    var getGeocode = function(location) {
-            // geocoding api
-        var apiUrl=('http://api.openweathermap.org/geo/1.0/direct?q=lansing&limit=5&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
-            fetch(apiUrl)
-            .then(function (response) {
-                console.log(response);
-                return response.json();
-            })
-            .then(function (data) {
-                console.log(data.results);
-                }
+var getGeocode = function(location) {
+    // geocoding api
+    var apiUrl=('http://api.openweathermap.org/geo/1.0/direct?q='+location+'&limit=1&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
+        fetch(apiUrl)
+        .then(function (response) {
+            console.log(response);
+            return response.json();
+        })
+        .then(function (data) {
+            // geocodeFound(data, location)
+            var latitude = (data[0].lat);
+            var longitude = (data[0].lon);
+            console.log(latitude, 'var');
+            console.log(longitude, 'var');
+        });
 
-            );
-        }
-//         } else {
-//             alert('Error: ' + response.message)
-//         }
-//     })   ' + location + '
-//         .catch(function (error) {
-//              alert('Unable to find location');
-//         });
-// };
+}
 
 // timers
 setInterval(displayTime, 1000);
+function history() {
+    localStorage.getItem('loc');
+    console.log(loc);
+}
