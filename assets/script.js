@@ -3,15 +3,8 @@ var jumboTime = $('#rightNow');
 var jumboWeather = $('#jumboWeather');
 var locationSearch = $('#locationSearch');
 var buttonBox = $('#buttonBox');
-
-
-function test() {
-    var startButton = $('<button>');
-    startButton.addClass('start-btn');
-    startButton.text('start');
-    buttonBox.append(startButton)
-}    
-
+var latitude;
+var longitude;
 
 // handle displaying the time
 function displayTime() {
@@ -64,12 +57,29 @@ var getGeocode = function(location) {
         })
         .then(function (data) {
             // geocodeFound(data, location)
-            var latitude = (data[0].lat);
-            var longitude = (data[0].lon);
+            latitude = (data[0].lat);
+            longitude = (data[0].lon);
             console.log(latitude, 'var');
             console.log(longitude, 'var');
+                
+        })
+        .then (function(latitude, longitude) {
+            getWeather(latitude, longitude);
         });
 
+}
+// get weather
+var getWeather = function () {
+    var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
+    var weatherUrl = ('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey);
+        fetch(weatherUrl)
+        .then(function(response) {
+            console.log(response);
+            return response.json
+        })
+        .then(function(data) {
+            console.log(data);
+        })
 }
 
 // timers
