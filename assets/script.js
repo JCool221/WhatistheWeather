@@ -5,6 +5,7 @@ var locationSearch = $('#locationSearch');
 var buttonBox = $('#buttonBox');
 var latitude;
 var longitude;
+var histLoc;
 
 // handle displaying the time
 function displayTime() {
@@ -19,8 +20,9 @@ locationSearch.submit(function(event) {
     var location = ($('input').first().val());
     
     // save location to local memory and write a button to re-search it
-    var locString = JSON.stringify(location);
-    console.log(locString);
+    var locArray = [localStorage.getItem('loc')];
+    var locString = [location];
+    var storedItem = locArray.concat(locString);
     localStorage.setItem('loc', locString);
 
         var newButton = $('<button>');
@@ -65,6 +67,7 @@ var getGeocode = function(location) {
         })
         .then (function(latitude, longitude) {
             getWeather(latitude, longitude);
+            getForecast(latitude, longitude);
         });
 
 }
@@ -81,10 +84,22 @@ var getWeather = function () {
             console.log(data);
         })
 }
+var getForecast = function () {
+    var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
+    var weatherUrl = ('https://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey);
+        fetch(weatherUrl)
+        .then(function(response) {
+            console.log(response);
+            return response.json
+        })
+        .then(function(data) {
+            console.log(data);
+        })
+}
 
 // timers
 setInterval(displayTime, 1000);
-function history() {
-    localStorage.getItem('loc');
-    console.log(loc);
+window.onload = function historical() {
+    histLoc = localStorage.getItem('loc');
+    console.log(histLoc);
 }
