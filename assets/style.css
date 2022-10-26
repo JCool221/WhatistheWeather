@@ -6,6 +6,9 @@ body {
     text-transform: capitalize;
 }
 
+#icon {
+  visibility: hidden;
+}
 /* Slide button styling credit to Joe Bocock https://codepen.io/joebocock/pen/ZEWoMPb*/
 .location-button {
     font-size: 20px;
@@ -39,7 +42,7 @@ body {
   
   .location-button::after {
     content: "";
-    background-color: #66f2d5;
+    background-color: #91d8ee;
     width: 100%;
     z-index: -1;
     position: absolute;
