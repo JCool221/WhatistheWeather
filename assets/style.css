@@ -21,6 +21,7 @@ main {
 }
 .card {
   border: 3px solid black;
+  margin: 2px;
   }
 
 .location-button {
