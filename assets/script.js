@@ -3,6 +3,7 @@ var jumboTime = $('#rightNow');
 var jumboWeather = $('#jumboWeather');
 var locationSearch = $('#locationSearch');
 var buttonBox = $('#buttonBox');
+var cardBox = $('#cardBox');
 var latitude;
 var longitude;
 var histLoc;
@@ -17,6 +18,7 @@ function displayTime() {
 locationSearch.submit(function(event) {
     // alert($('input').first().val());
     event.preventDefault();
+    cardBox.empty();
     var location = ($('input').first().val());
     
     // save location to local memory and write a button to re-search it
@@ -35,7 +37,6 @@ locationSearch.submit(function(event) {
     // placeholder responses
     jumboDisp.text(location);
     // log location and get geocode
-    console.log(location);
     if (location) {
         getGeocode(location);
         
@@ -60,8 +61,6 @@ var getGeocode = function(location) {
         // geocodeFound(data, location)
         latitude = (data[0].lat);
         longitude = (data[0].lon);
-        console.log(latitude, 'var');
-        console.log(longitude, 'var');
         
     })
     .then (function(latitude, longitude) {
@@ -80,8 +79,6 @@ var getWeather = function () {
         return response.json();
     })
     .then(function(data) {
-        console.log(data);
-        console.log(data.main.temp);
         var iconcode = (data.weather[0].icon);
         var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
         $('#wicon').attr('src', iconurl).css('visibility','visible');
@@ -98,6 +95,25 @@ var getForecast = function () {
         })
         .then(function(data) {
             console.log(data);
+            for ( let i = 0; i < 5; i++) {
+                var foreCard=$('<div>');
+                
+                foreCard.addClass('card');
+                foreCard.text((data.list[i].dt_txt));
+                foreCard.append('<i>'+'icon'+'</i>');
+                var iconcode = (data.list[0].weather[0].icon);
+                console.log(iconcode);
+                // var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+                var iconurl='https://cdn-icons-png.flaticon.com/512/2562/2562004.png';
+                console.log(iconurl);
+                var iconimg=$('<img id ="icon" src='+iconurl+'>')
+                var foreCardList=$('<ul>');
+                foreCard.append(foreCardList);
+                    foreCardList.append('<li>'+'Temp: '+(data.list[i].main.temp)+'°');
+                    foreCardList.append('<li>'+'Wind: '+(data.list[i].wind.speed)+ 'mph');
+                    foreCardList.append('<li>'+'Humidity: '+(data.list[i].main.humidity)+'%');
+                cardBox.append(foreCard);
+            }
         })
 }
 
@@ -105,5 +121,5 @@ var getForecast = function () {
 setInterval(displayTime, 1000);
 window.onload = function historical() {
     histLoc = localStorage.getItem('loc');
-    console.log(histLoc);
+    // console.log(histLoc);
 }
