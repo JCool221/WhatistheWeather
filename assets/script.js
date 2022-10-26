@@ -82,6 +82,9 @@ var getWeather = function () {
     .then(function(data) {
         console.log(data);
         console.log(data.main.temp);
+        var iconcode = (data.weather[0].icon);
+        var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+        $('#wicon').attr('src', iconurl).css('visibility','visible');
         jumboWeather.text("Current temperature:"+ (data.main.temp)+('° ')+" Humidity:"+(data.main.humidity)+('% ')+" Wind Speed:"+(data.wind.speed)+('mph'));
     })
 }
