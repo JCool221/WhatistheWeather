@@ -39,7 +39,7 @@ body {
   
   .location-button::after {
     content: "";
-    background-color: #66f2d5;
+    background-color: #91d8ee;
     width: 100%;
     z-index: -1;
     position: absolute;

@@ -34,63 +34,64 @@ locationSearch.submit(function(event) {
     
     // placeholder responses
     jumboDisp.text(location);
-    jumboWeather.text("It's Cold and it will continue to be cold for at least 5 more days");
     // log location and get geocode
     console.log(location);
     if (location) {
-            getGeocode(location);
+        getGeocode(location);
         
-        }
-        locationSearch.each(function(){
-            this.reset();
-        });    
+    }
+    locationSearch.each(function(){
+        this.reset();
     });    
-    
+});    
+
 // get geocode
 // data is looking at a local file, rename var?
-    
+
 var getGeocode = function(location) {
     // geocoding api
     var apiUrl=('http://api.openweathermap.org/geo/1.0/direct?q='+location+'&limit=1&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
-        fetch(apiUrl)
-        .then(function (response) {
-            console.log(response);
-            return response.json();
-        })
-        .then(function (data) {
-            // geocodeFound(data, location)
-            latitude = (data[0].lat);
-            longitude = (data[0].lon);
-            console.log(latitude, 'var');
-            console.log(longitude, 'var');
-                
-        })
-        .then (function(latitude, longitude) {
-            getWeather(latitude, longitude);
-            getForecast(latitude, longitude);
-        });
-
+    fetch(apiUrl)
+    .then(function (response) {
+        console.log(response);
+        return response.json();
+    })
+    .then(function (data) {
+        // geocodeFound(data, location)
+        latitude = (data[0].lat);
+        longitude = (data[0].lon);
+        console.log(latitude, 'var');
+        console.log(longitude, 'var');
+        
+    })
+    .then (function(latitude, longitude) {
+        getWeather(latitude, longitude);
+        getForecast(latitude, longitude);
+    });
+    
 }
 // get weather
 var getWeather = function () {
     var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    var weatherUrl = ('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey);
-        fetch(weatherUrl)
-        .then(function(response) {
-            console.log(response);
-            return response.json
-        })
-        .then(function(data) {
-            console.log(data);
-        })
+    var weatherUrl = ('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+    fetch(weatherUrl)
+    .then(function(response) {
+        console.log(response);
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+        console.log(data.main.temp);
+        jumboWeather.text("Current temperature:"+ (data.main.temp)+('° ')+" Humidity:"+(data.main.humidity)+('% ')+" Wind Speed:"+(data.wind.speed)+('mph'));
+    })
 }
 var getForecast = function () {
     var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    var weatherUrl = ('https://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey);
-        fetch(weatherUrl)
+    var weatherUrl = ('https://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+    fetch(weatherUrl)
         .then(function(response) {
             console.log(response);
-            return response.json
+            return response.json();
         })
         .then(function(data) {
             console.log(data);
