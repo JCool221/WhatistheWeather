@@ -87,7 +87,7 @@ var getWeather = function () {
 }
 var getForecast = function () {
     var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    var weatherUrl = ('https://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+    var weatherUrl = ('http://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
         .then(function(response) {
             console.log(response);
@@ -100,13 +100,13 @@ var getForecast = function () {
                 
                 foreCard.addClass('card');
                 foreCard.text((data.list[i].dt_txt));
-                foreCard.append('<i>'+'icon'+'</i>');
                 var iconcode = (data.list[0].weather[0].icon);
                 console.log(iconcode);
-                // var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-                var iconurl='https://cdn-icons-png.flaticon.com/512/2562/2562004.png';
+                var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
                 console.log(iconurl);
                 var iconimg=$('<img id ="icon" src='+iconurl+'>')
+                
+                foreCard.append('<i>'+iconimg+'</i>');
                 var foreCardList=$('<ul>');
                 foreCard.append(foreCardList);
                     foreCardList.append('<li>'+'Temp: '+(data.list[i].main.temp)+'°');
@@ -119,7 +119,20 @@ var getForecast = function () {
 
 // timers
 setInterval(displayTime, 1000);
+
+// load history and create button
 window.onload = function historical() {
     histLoc = localStorage.getItem('loc');
-    // console.log(histLoc);
+    console.log(histLoc);
+    var newButton = $('<button>');
+    newButton.addClass('location-button');
+    newButton.text(histLoc);
+    buttonBox.append(newButton);
 }
+
+// event listener on the buttonBox
+buttonBox.on('click', '.location-button', function() {
+    console.log(histLoc)
+    var location = histLoc
+    getGeocode(location);
+})
