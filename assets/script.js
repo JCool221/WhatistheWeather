@@ -72,7 +72,7 @@ var getGeocode = function(location) {
 // get weather
 var getWeather = function () {
     var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    var weatherUrl = ('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+    var weatherUrl = ('http://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
     .then(function(response) {
         console.log(response);
