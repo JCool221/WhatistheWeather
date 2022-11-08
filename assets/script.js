@@ -1,16 +1,13 @@
-var jumboDisp = $('#jumboDisp');
-var jumboTime = $('#rightNow');
-var jumboWeather = $('#jumboWeather');
-var locationSearch = $('#locationSearch');
-var buttonBox = $('#buttonBox');
-var cardBox = $('#cardBox');
-var latitude;
-var longitude;
-var histLoc;
+const jumboDisp = $('#jumboDisp');
+const jumboTime = $('#rightNow');
+const jumboWeather = $('#jumboWeather');
+const locationSearch = $('#locationSearch');
+const buttonBox = $('#buttonBox');
+const cardBox = $('#cardBox');
 
 // handle displaying the time
 function displayTime() {
-    var rightNow = moment().format('MMM DD, YYYY [at] hh:mm:ss a');
+    let rightNow = moment().format('MMM DD, YYYY [at] hh:mm a');
     jumboTime.text(rightNow);
 }     
 
@@ -19,15 +16,15 @@ locationSearch.submit(function(event) {
     // alert($('input').first().val());
     event.preventDefault();
     cardBox.empty();
-    var location = ($('input').first().val());
+    let location = ($('input').first().val());
     
     // save location to local memory and write a button to re-search it
-    var locArray = [localStorage.getItem('loc')];
-    var locString = [location];
-    var storedItem = locArray.concat(locString);
+    let locArray = [localStorage.getItem('loc')];
+    let locString = [location];
+    let storedItem = locArray.concat(locString);
     localStorage.setItem('loc', locString);
 
-        var newButton = $('<button>');
+        let newButton = $('<button>');
         newButton.addClass('location-button');
         newButton.attr('data-location', location);
         newButton.text(location);
@@ -47,14 +44,14 @@ locationSearch.submit(function(event) {
 });    
 
 // get geocode
-// data is looking at a local file, rename var?
+// data is looking at a local file, rename let?
 
-var getGeocode = function(location) {
+const getGeocode = function(location) {
     // geocoding api
-    var apiUrl=('http://api.openweathermap.org/geo/1.0/direct?q='+location+'&limit=1&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
+    let apiUrl=('http://api.openweathermap.org/geo/1.0/direct?q='+location+'&limit=1&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
     fetch(apiUrl)
     .then(function (response) {
-        console.log(response);
+        // console.log(response);
         return response.json();
     })
     .then(function (data) {
@@ -70,24 +67,24 @@ var getGeocode = function(location) {
     
 }
 // get weather
-var getWeather = function () {
-    var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    var weatherUrl = ('http://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+const getWeather = function () {
+    let apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
+    let weatherUrl = ('http://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
     .then(function(response) {
-        console.log(response);
+        // console.log(response);
         return response.json();
     })
     .then(function(data) {
-        var iconcode = (data.weather[0].icon);
-        var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+        let iconcode = (data.weather[0].icon);
+        let iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
         $('#wicon').attr('src', iconurl).css('visibility','visible');
         jumboWeather.text("Current temperature:"+ (data.main.temp)+('° ')+" Humidity:"+(data.main.humidity)+('% ')+" Wind Speed:"+(data.wind.speed)+('mph'));
     })
 }
-var getForecast = function () {
-    var apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    var weatherUrl = ('http://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+const getForecast = function () {
+    let apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
+    let weatherUrl = ('http://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
         .then(function(response) {
             console.log(response);
@@ -95,19 +92,19 @@ var getForecast = function () {
         })
         .then(function(data) {
             console.log(data);
-            for ( let i = 0; i < 5; i++) {
-                var foreCard=$('<div>');
+            for ( let i = 0; i < 9; i++) {
+                let foreCard=$('<div>');
                 
                 foreCard.addClass('card');
                 foreCard.text((data.list[i].dt_txt));
-                var iconcode = (data.list[0].weather[0].icon);
-                console.log(iconcode);
-                var iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-                console.log(iconurl);
-                var iconimg=$('<img id ="icon" src='+iconurl+'>')
-                
-                foreCard.append('<i>'+iconimg+'</i>');
-                var foreCardList=$('<ul>');
+                // let iconcode = (data.list[0].weather[0].icon);
+                // console.log(iconcode);
+                // let iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+                // console.log(iconurl);
+                // // let iconimg=$('<img id ="icon" src='+iconurl+'>')
+                // // console.log(iconimg);
+                // foreCard.append('<i><img id ="icon" src='+iconurl+'></i>');
+                let foreCardList=$('<ul>');
                 foreCard.append(foreCardList);
                     foreCardList.append('<li>'+'Temp: '+(data.list[i].main.temp)+'°');
                     foreCardList.append('<li>'+'Wind: '+(data.list[i].wind.speed)+ 'mph');
@@ -123,8 +120,8 @@ setInterval(displayTime, 1000);
 // load history and create button
 window.onload = function historical() {
     histLoc = localStorage.getItem('loc');
-    console.log(histLoc);
-    var newButton = $('<button>');
+    // console.log(histLoc);
+    let newButton = $('<button>');
     newButton.addClass('location-button');
     newButton.text(histLoc);
     buttonBox.append(newButton);
@@ -132,7 +129,7 @@ window.onload = function historical() {
 
 // event listener on the buttonBox
 buttonBox.on('click', '.location-button', function() {
-    console.log(histLoc)
-    var location = histLoc
+    // console.log(histLoc)
+    let location = histLoc
     getGeocode(location);
 })
