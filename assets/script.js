@@ -48,7 +48,7 @@ locationSearch.submit(function(event) {
 
 const getGeocode = function(location) {
     // geocoding api
-    let apiUrl=('http://api.openweathermap.org/geo/1.0/direct?q='+location+'&limit=1&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
+    let apiUrl=('https://api.openweathermap.org/geo/1.0/direct?q='+location+'&limit=1&appid=d1d5e85e2e78ecf3d96e1c2539356352')            
     fetch(apiUrl)
     .then(function (response) {
         // console.log(response);
@@ -69,7 +69,7 @@ const getGeocode = function(location) {
 // get weather
 const getWeather = function () {
     let apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    let weatherUrl = ('http://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+    let weatherUrl = ('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
     .then(function(response) {
         // console.log(response);
@@ -77,14 +77,14 @@ const getWeather = function () {
     })
     .then(function(data) {
         let iconcode = (data.weather[0].icon);
-        let iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+        let iconurl = "https://openweathermap.org/img/w/" + iconcode + ".png";
         $('#wicon').attr('src', iconurl).css('visibility','visible');
         jumboWeather.text("Current temperature:"+ (data.main.temp)+('° ')+" Humidity:"+(data.main.humidity)+('% ')+" Wind Speed:"+(data.wind.speed)+('mph'));
     })
 }
 const getForecast = function () {
     let apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
-    let weatherUrl = ('http://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
+    let weatherUrl = ('https://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
         .then(function(response) {
             console.log(response);
