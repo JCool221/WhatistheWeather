@@ -1,5 +1,10 @@
+:root{
+  --boxShadow: 2px 2px 5px black;
+
+}
+
 body {
-    font-family: 'Roboto Mono', monospace;
+  font-family: "Roboto Mono", monospace;
 }
 
 main {
@@ -8,33 +13,39 @@ main {
 }
 
 #jumboDisp {
-    text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 #icon {
   visibility: hidden;
 }
+
 #cardBox {
   display: flex;
   justify-content: space-between;
-  margin: 5px
+  margin: 5px;
+  flex-wrap: wrap;
 }
 .card {
   border: 3px solid black;
   margin: 2px;
-  }
+  min-width: 12rem;
+  border-radius: 10px;
+  box-shadow: var(--boxShadow);
+
+}
 
 .location-button {
-    font-size: 20px;
-    font-weight: 200;
-    letter-spacing: 1px;
-    padding: 13px 30px 13px;
-    outline: 0;
-    margin-left: 10px;
-    border: 1px solid black;
-    cursor: pointer;
-    position: relative;
-    text-transform: capitalize;
-  }
-  
-  
+  font-size: 20px;
+  font-weight: 200;
+  letter-spacing: 1px;
+  padding: 13px 30px 13px;
+  outline: 0;
+  margin-left: 10px;
+  border: 1px solid black;
+  cursor: pointer;
+  position: relative;
+  text-transform: capitalize;
+  border-radius: 10px;
+  box-shadow: var(--boxShadow);
+}

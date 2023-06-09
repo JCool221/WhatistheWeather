@@ -13,9 +13,8 @@ function displayTime() {
 
 //   handler to launch search
 locationSearch.submit(function(event) {
-    // alert($('input').first().val());
     event.preventDefault();
-    cardBox.empty();
+    // cardBox.empty();
     let location = ($('input').first().val());
     
     // save location to local memory and write a button to re-search it
@@ -68,6 +67,7 @@ const getGeocode = function(location) {
 }
 // get weather
 const getWeather = function () {
+    cardBox.empty();
     let apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
     let weatherUrl = ('https://api.openweathermap.org/data/2.5/weather?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
@@ -87,29 +87,38 @@ const getForecast = function () {
     let weatherUrl = ('https://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
         .then(function(response) {
-            console.log(response);
             return response.json();
         })
         .then(function(data) {
             console.log(data);
-            for ( let i = 0; i < 9; i++) {
-                let foreCard=$('<div>');
-                
+            let uniqueDates = [];
+            for ( let i = 0; i < data.list.length; i++) {
+                let date = (data.list[i].dt_txt.split(' '))
+                let day = (date[0].substring(8,10))
+
+                // check for uniqueness of date
+                if (uniqueDates.includes(day)) {
+                    continue;
+                }
+
+                let foreCard=$('<div>');                
                 foreCard.addClass('card');
-                foreCard.text((data.list[i].dt_txt));
+                foreCard.text((date[0]));
+
+                // Icons aren't working correctly yet, todo: fix this
                 // let iconcode = (data.list[0].weather[0].icon);
-                // console.log(iconcode);
                 // let iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-                // console.log(iconurl);
-                // // let iconimg=$('<img id ="icon" src='+iconurl+'>')
-                // // console.log(iconimg);
-                // foreCard.append('<i><img id ="icon" src='+iconurl+'></i>');
+                // foreCard.append('<img src='+iconurl+'>');
+
                 let foreCardList=$('<ul>');
                 foreCard.append(foreCardList);
-                    foreCardList.append('<li>'+'Temp: '+(data.list[i].main.temp)+'°');
+                    foreCardList.append('<li>'+'Low: '+(data.list[i].main.temp_min)+'°');
+                    foreCardList.append('<li>'+'High: '+(data.list[i].main.temp_max)+'°');
                     foreCardList.append('<li>'+'Wind: '+(data.list[i].wind.speed)+ 'mph');
                     foreCardList.append('<li>'+'Humidity: '+(data.list[i].main.humidity)+'%');
                 cardBox.append(foreCard);
+
+                uniqueDates.push(day)
             }
         })
 }
