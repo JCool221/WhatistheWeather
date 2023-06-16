@@ -83,6 +83,7 @@ const getWeather = function () {
     })
 }
 const getForecast = function () {
+    let cardCount = 0
     let apiKey = 'd1d5e85e2e78ecf3d96e1c2539356352'
     let weatherUrl = ('https://api.openweathermap.org/data/2.5/forecast?lat='+latitude+'&lon='+longitude+'&appid='+apiKey+'&units=imperial');
     fetch(weatherUrl)
@@ -92,7 +93,7 @@ const getForecast = function () {
         .then(function(data) {
             console.log(data);
             let uniqueDates = [];
-            for ( let i = 0; i < data.list.length; i++) {
+            for ( let i = 0; i < data.list.length && cardCount < 5; i++) {
                 let date = (data.list[i].dt_txt.split(' '))
                 let day = (date[0].substring(8,10))
 
@@ -105,10 +106,9 @@ const getForecast = function () {
                 foreCard.addClass('card');
                 foreCard.text((date[0]));
 
-                // Icons aren't working correctly yet, todo: fix this
-                // let iconcode = (data.list[0].weather[0].icon);
-                // let iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
-                // foreCard.append('<img src='+iconurl+'>');
+                let iconcode = (data.list[i].weather[0].icon);
+                let iconurl = "http://openweathermap.org/img/w/" + iconcode + ".png";
+                foreCard.append('<img src='+iconurl+'>');
 
                 let foreCardList=$('<ul>');
                 foreCard.append(foreCardList);
@@ -117,6 +117,7 @@ const getForecast = function () {
                     foreCardList.append('<li>'+'Wind: '+(data.list[i].wind.speed)+ 'mph');
                     foreCardList.append('<li>'+'Humidity: '+(data.list[i].main.humidity)+'%');
                 cardBox.append(foreCard);
+                cardCount++
 
                 uniqueDates.push(day)
             }
